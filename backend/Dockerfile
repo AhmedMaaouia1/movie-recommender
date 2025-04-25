@@ -5,11 +5,11 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Étape 3 : copier le fichier des dépendances et installer les packages
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Étape 4 : copier le code source dans l’image Docker
-COPY app/ .
+COPY backend/app/ .
 
 # Étape 5 : lancer l'application avec uvicorn (FastAPI server)
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

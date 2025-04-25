@@ -2,14 +2,30 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: movie-backend
     ports:
       - "8000:8000"
     env_file:
       - .env
     volumes:
+      - ./backend/app:/app                # montage du code backend
+      - ./backend/db_data:/app/db_data    # partage du fichier SQLite
+    restart: always
+
+  cron:
+    build:
+      context: .
+      dockerfile: cronjob/Dockerfile
+    container_name: movie-cron
+    env_file:
+      - .env
+    volumes:
       - ./backend/app:/app
+      - ./backend/db_data:/app/db_data    # utiliser le même volume que le backend
+      - ./.env:/app/.env
     restart: always
 
   frontend:

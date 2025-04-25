@@ -1,0 +1,11 @@
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday=0)
+# │ │ │ │ │
+# │ │ │ │ │
+# 0 0 * * 0 python /app/insert_movies.py >> /app/cron.log 2>&1
+# Pour tester plus rapidement, tu peux mettre * * * * * au début.
+SHELL=/bin/bash
+0 0 * * 0 set -a; source /app/.env; set +a; /usr/local/bin/python3 /app/insert_movies.py >> /app/cron.log 2>&1
